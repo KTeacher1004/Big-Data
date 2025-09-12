@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='utf-8'/>
+  <title>Prediction Analysis Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 1.5rem; line-height:1.4; }
+    h1,h2,h3 { color:#233; }
+    .narrative { background:#f5f7fa; padding:1rem; border-radius:6px; }
+    table.tbl { border-collapse:collapse; margin:1rem 0; font-size:0.9rem; }
+    table.tbl th, table.tbl td { border:1px solid #ccc; padding:4px 6px; text-align:left; }
+    .metrics span { display:inline-block; margin-right:1rem; }
+    footer { margin-top:2rem; font-size:0.75rem; color:#666; }
+  </style>
+</head>
+<body>
+  <h1>Product Rating Prediction Analysis</h1>
+  <section class='metrics'>
+    <h2>Key Metrics</h2>
+    <span><strong>mae</strong>: 0.330823914006225</span><span><strong>rmse</strong>: 0.39441944214690183</span><span><strong>bias_mean_signed_err</strong>: -0.19582036927215052</span><span><strong>bin_accuracy</strong>: 0.7307692307692307</span><span><strong>mean_true_rating</strong>: 4.384615384615385</span><span><strong>mean_pred_rating</strong>: 4.188795015343234</span>
+  </section>
+  <section class='narrative'>
+    <h2>AI Narrative</h2>
+    <pre style='white-space:pre-wrap'>### Performance Overview
+- **Accuracy**: The model achieves a bin accuracy of approximately 73%, indicating a moderate level of correct predictions.
+- **Error**: The Mean Absolute Error (MAE) is around 0.33, suggesting that predictions are generally off by about one-third of a star. The Root Mean Square Error (RMSE) of 0.39 indicates variability in prediction errors.
+- **Bias**: The model exhibits a negative bias (mean signed error of -0.20), indicating a tendency to under-predict ratings.
+
+### Reliability Risks
+- **Underperformance**:
+  - **Brands**: LG (avg. abs. error of 0.66) and Acer (0.37) show significant prediction errors.
+  - **Types**: TVs generally have higher errors (avg. 0.36) compared to laptops (avg. 0.32).
+- **Outliers**: Specific products (e.g., LG TV with an abs. error of 0.78) demonstrate extreme prediction inaccuracies, which could skew overall performance.
+
+### Business Implications
+- **Inventory Management**: Misestimation of product ratings may lead to overstocking or understocking, affecting sales and cash flow.
+- **Marketing Strategies**: Inaccurate ratings can mislead marketing efforts, potentially harming brand reputation and customer trust.
+- **Customer Satisfaction**: Discrepancies between expected and actual product performance can lead to negative reviews and decreased customer loyalty.
+
+### Concrete Next Actions
+- **Data Collection**: Enhance the dataset by including more diverse brands and product types, particularly focusing on underperforming categories.
+- **Model Tuning**: Investigate and adjust model parameters to reduce bias and improve accuracy, especially for brands and product types with high error rates.
+- **Product Focus**: Prioritize analysis and improvement efforts on high-error products (e.g., LG TVs, Acer laptops) to enhance predictive accuracy and customer satisfaction.</pre>
+    <h2>Deterministic Summary</h2>
+    <pre style='white-space:pre-wrap'>Dataset size: 26 records. MAE=0.331, RMSE=0.394, Bin accuracy=0.731, Bias=-0.196.
+Bias is modest; mean signed error near zero.
+Best brand (error): hp avg_abs_err=0.219.
+Most challenging brand: asus avg_abs_err=0.477.
+Top error outliers (asin -> abs_err): B0DYQM4BDB->0.780, B0F6PLQ93N->0.686, B0FHYCR41F->0.615
+Recommended next steps: 1) Gather more training data for high-error brands/types. 2) Investigate text patterns in outliers. 3) Calibrate model or ensemble for underperforming segments. 4) Use high-confidence segments for marketing claims; monitor others.</pre>
+  </section>
+    <section>
+        <h2>Overall Summary</h2>
+        <p class='explanation'>Model shows MAE 0.331 and RMSE 0.394, indicating typical absolute error under ~0.33 stars. Bias of -0.196 suggests systematic under prediction. Bin accuracy 73.08% shows how often coarse rating buckets match. Focus improvements on reducing large outlier errors influencing RMSE.</p>
+    </section>
+    <h3>Brand Performance</h3><table class="dataframe tbl">
+  <thead>
+    <tr style="text-align: right;">
+      <th>brand</th>
+      <th>count</th>
+      <th>avg_abs_err</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>unknown</td>
+      <td>5</td>
+      <td>0.239518</td>
+    </tr>
+    <tr>
+      <td>hp</td>
+      <td>5</td>
+      <td>0.218552</td>
+    </tr>
+    <tr>
+      <td>asus</td>
+      <td>3</td>
+      <td>0.476761</td>
+    </tr>
+    <tr>
+      <td>acer</td>
+      <td>2</td>
+      <td>0.367761</td>
+    </tr>
+    <tr>
+      <td>samsung</td>
+      <td>2</td>
+      <td>0.259719</td>
+    </tr>
+    <tr>
+      <td>apple</td>
+      <td>2</td>
+      <td>0.380993</td>
+    </tr>
+    <tr>
+      <td>lg</td>
+      <td>2</td>
+      <td>0.661335</td>
+    </tr>
+    <tr>
+      <td>hisense</td>
+      <td>1</td>
+      <td>0.360320</td>
+    </tr>
+    <tr>
+      <td>panasonic</td>
+      <td>1</td>
+      <td>0.049398</td>
+    </tr>
+    <tr>
+      <td>lenovo</td>
+      <td>1</td>
+      <td>0.245395</td>
+    </tr>
+  </tbody>
+</table><p class='explanation'>Lowest error brand: panasonic (0.049). Highest: lg (0.661). Gap suggests segment-specific behavior; consider stratified retraining. Brands above MAE*1.2: asus, lg Prioritize data enrichment or feature engineering for high-error brands.</p>
+    <h3>Type Performance</h3><table class="dataframe tbl">
+  <thead>
+    <tr style="text-align: right;">
+      <th>type</th>
+      <th>count</th>
+      <th>avg_abs_err</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>laptop</td>
+      <td>14</td>
+      <td>0.317007</td>
+    </tr>
+    <tr>
+      <td>tv</td>
+      <td>11</td>
+      <td>0.357775</td>
+    </tr>
+    <tr>
+      <td>ultrabook</td>
+      <td>1</td>
+      <td>0.227798</td>
+    </tr>
+  </tbody>
+</table><p class='explanation'>Best type: ultrabook (0.228); hardest: tv (0.358). Differences may reflect distinct text vocabularies or rating distributions. Consider separate model heads or domain-specific fine-tuning if disparity persists.</p>
+    <h3>Worst Absolute Errors</h3><table class="dataframe tbl">
+  <thead>
+    <tr style="text-align: right;">
+      <th>asin</th>
+      <th>brand</th>
+      <th>type</th>
+      <th>true_rating</th>
+      <th>pred_rating</th>
+      <th>abs_err</th>
+      <th>ratings_total</th>
+      <th>sample_text</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>B0DYQM4BDB</td>
+      <td>lg</td>
+      <td>tv</td>
+      <td>4.4</td>
+      <td>3.619953</td>
+      <td>0.780047</td>
+      <td>116</td>
+      <td>LG 65-Inch Class OLED evo AI 4K C5 Series Smart TV w/Dolby Atmos, Dolby Vision, HDR10, AI Super Upscaling 4K, Filmmaker Mode, Wow Orchestra,</td>
+    </tr>
+    <tr>
+      <td>B0F6PLQ93N</td>
+      <td>acer</td>
+      <td>laptop</td>
+      <td>4.6</td>
+      <td>3.913536</td>
+      <td>0.686464</td>
+      <td>14</td>
+      <td>Acer Nitro V Gaming Laptop | Intel Core i7-13620H Processor | NVIDIA GeForce RTX 4050 Laptop GPU | 15.6" FHD IPS 165Hz Display | 16GB DDR5 |</td>
+    </tr>
+    <tr>
+      <td>B0FHYCR41F</td>
+      <td>sony</td>
+      <td>tv</td>
+      <td>4.0</td>
+      <td>4.615119</td>
+      <td>0.615119</td>
+      <td>8</td>
+      <td>Sony 77 Inch OLED 4K Ultra HD TV BRAVIA XR8B Smart Google TV with Dolby Vision HDR and Exclusive Features for PlayStation® 5 (K-77XR8B), 202</td>
+    </tr>
+    <tr>
+      <td>B0FLXTK4HL</td>
+      <td>hp</td>
+      <td>laptop</td>
+      <td>4.4</td>
+      <td>3.851171</td>
+      <td>0.548829</td>
+      <td>418</td>
+      <td>HP 15.6" FHD Laptop Computer for Home Business Student, Intel Processor (Beat i3-1115G4), 32GB DDR4 RAM, 1TB PCIe SSD, WiFi 6E, Bluetooth 5.</td>
+    </tr>
+    <tr>
+      <td>B0CVS18PH9</td>
+      <td>lg</td>
+      <td>tv</td>
+      <td>4.6</td>
+      <td>4.057377</td>
+      <td>0.542623</td>
+      <td>1320</td>
+      <td>LG 65-Inch Class OLED evo C4 Series Smart TV 4K Processor Flat Screen with Magic Remote AI-Powered with Alexa Built-in (OLED65C4PUA, 2024)</td>
+    </tr>
+  </tbody>
+</table><p class='explanation'>Largest absolute error 0.780 on ASIN B0DYQM4BDB (true 4.4, pred 3.619953248235914). Outliers often have atypical wording or sparse context; inspect text samples. Mitigate via data augmentation or model calibration (e.g., isotonic).</p>
+    <h3>Confusion Matrix (True vs Pred Bin)</h3><table class="dataframe tbl">
+  <thead>
+    <tr style="text-align: right;">
+      <th>true_bin</th>
+      <th>4</th>
+      <th>5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>4</td>
+      <td>16</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table><p class='explanation'>Overall bin accuracy 73.08%; most errors likely near adjacent bins. Confusion concentrated where true ratings border decision thresholds.</p>
+  <footer>Generated by agent.py</footer>
+</body>
+</html>
