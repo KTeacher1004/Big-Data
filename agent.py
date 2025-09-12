@@ -15,9 +15,9 @@ Environment:
     deterministic local narrative is produced.
 
 Example:
-    python agent.py --csv product_predictions.csv --model gpt-4o-mini
+    py -3.13-64 agent.py --csv product_predictions.csv --api-key <API_KEY> --report-prefix analysis/product_predictions --html report.html
 
-Outputs JSON to stdout containing:
+Outputs containing:
     summary: numeric + tabular aggregates
     ai_summary: (optional) model-generated business analysis
     local_summary: fallback deterministic human-readable text
@@ -132,16 +132,10 @@ def summarize_predictions(df: pd.DataFrame, max_categories: int = 10) -> Dict[st
     }
 
 
-########## Configuration (discouraged hardcoded key) ###########################################
-
-# WARNING: Hardcoding secrets is insecure. This is only for a disposable demo environment.
-# For production use environment variables or a secret manager.
-HARD_CODED_OPENAI_KEY = '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'  # <-- optionally place a short-lived demo key here
-
 ########## AI Narrative #########################################################################
 
 def call_openai_analysis(summary: Dict[str, Any], model: str = 'gpt-4o-mini', api_key: Optional[str] = None) -> Dict[str, Any]:
-    api_key = api_key or os.getenv('OPENAI_API_KEY') or HARD_CODED_OPENAI_KEY
+    api_key = api_key or os.getenv('OPENAI_API_KEY')
     if not api_key:
         return {'success': False, 'error': 'missing OPENAI_API_KEY'}
 
